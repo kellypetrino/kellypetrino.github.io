@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kelly Petrino — Portfolio</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f4ee; --bg2: #eee9df; --bg3: #e5dfd3;
+    --green: #2d5a3d; --green2: #3d7a52; --green-light: #c8ddd0;
+    --cream: #faf7f2; --text: #1e2a22; --muted: #6b7a6e;
+    --border: rgba(45,90,61,0.18);
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Georgia', serif; line-height: 1.7; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 4rem; background: rgba(247,244,238,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-size: 1.1rem; letter-spacing: 0.12em; color: var(--green); font-family: 'Georgia', serif; }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-family: Arial, sans-serif; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green); }
+
+  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6rem 2rem 4rem; position: relative; background: var(--green); overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(255,255,255,0.05) 0%, transparent 70%); pointer-events: none; }
+  .hero-line { width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, rgba(232,221,200,0.7), transparent); margin: 0 auto 2rem; }
+  .hero-tag { font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: #c8ddd0; margin-bottom: 1.2rem; }
+  .hero h1 { font-size: clamp(2.8rem, 6vw, 5rem); font-weight: normal; letter-spacing: 0.03em; color: #faf7f2; line-height: 1.15; margin-bottom: 1.2rem; }
+  .hero h1 span { color: #e8ddc8; }
+  .hero-sub { font-family: Arial, sans-serif; font-size: 1rem; color: #a8bfad; max-width: 580px; margin: 0 auto 2.5rem; letter-spacing: 0.02em; line-height: 1.7; }
+  .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { padding: 0.8rem 2.2rem; background: #e8ddc8; color: var(--green); border: none; border-radius: 2px; font-family: Arial, sans-serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s; text-decoration: none; display: inline-block; font-weight: 500; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline { padding: 0.8rem 2.2rem; background: transparent; color: #e8ddc8; border: 1px solid rgba(232,221,200,0.5); border-radius: 2px; font-family: Arial, sans-serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+  .btn-outline:hover { background: rgba(232,221,200,0.1); border-color: #e8ddc8; }
+
+  section { padding: 6rem 2rem; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  .section-tag { font-family: Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green2); margin-bottom: 0.6rem; }
+  .section-title { font-size: 2.2rem; font-weight: normal; color: var(--text); margin-bottom: 1rem; letter-spacing: 0.02em; }
+  .divider { width: 48px; height: 2px; background: var(--green); margin-bottom: 3rem; border-radius: 1px; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 4rem; align-items: center; }
+  .about-photo { aspect-ratio: 3/4; background: var(--green-light); border: 1px solid var(--border); border-radius: 2px; display: flex; align-items: center; justify-content: center; color: var(--green); font-family: Arial, sans-serif; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .about-text p { color: var(--muted); margin-bottom: 1.2rem; font-size: 1rem; }
+  .stats-row { display: flex; gap: 2.5rem; margin-top: 2rem; flex-wrap: wrap; }
+  .stat-num { font-size: 2rem; color: var(--green); font-family: Georgia, serif; line-height: 1; }
+  .stat-label { font-family: Arial, sans-serif; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.2rem; }
+
+  .edu-section { background: var(--bg); }
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .edu-card { background: var(--cream); border: 1px solid var(--border); border-radius: 2px; padding: 1.6rem; }
+  .edu-years { font-family: Arial, sans-serif; font-size: 0.75rem; color: var(--green2); letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+  .edu-school { font-size: 1.1rem; color: var(--text); margin-bottom: 0.2rem; }
+  .edu-degree { font-family: Arial, sans-serif; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.9rem; }
+  .edu-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .edu-tag { font-family: Arial, sans-serif; font-size: 0.75rem; padding: 0.25rem 0.65rem; background: var(--green-light); color: var(--green); border-radius: 2px; }
+
+  .exp-section { background: var(--bg2); }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px; background: var(--border); }
+  .timeline-item { position: relative; margin-bottom: 3rem; }
+  .timeline-item::before { content: ''; position: absolute; left: -2.35rem; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--green); border: 2px solid var(--bg2); }
+  .timeline-date { font-family: Arial, sans-serif; font-size: 0.75rem; color: var(--green2); letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+  .timeline-role { font-size: 1.1rem; color: var(--text); margin-bottom: 0.2rem; }
+  .timeline-company { font-family: Arial, sans-serif; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .timeline-bullets { font-family: Arial, sans-serif; font-size: 0.88rem; color: var(--muted); line-height: 1.7; padding-left: 1.1rem; }
+  .timeline-bullets li { margin-bottom: 0.35rem; }
+  .sub-label { font-family: Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green2); margin: 1rem 0 0.4rem; }
+
+  .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .portfolio-card { background: var(--cream); border: 1px solid var(--border); border-radius: 2px; overflow: hidden; transition: border-color 0.25s, transform 0.25s; cursor: pointer; }
+  .portfolio-card:hover { border-color: var(--green); transform: translateY(-3px); }
+  .card-img { height: 160px; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--green); border-bottom: 1px solid var(--border); }
+  .card-body { padding: 1.2rem 1.4rem; }
+  .card-tag { font-family: Arial, sans-serif; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green2); margin-bottom: 0.4rem; }
+  .card-title { font-size: 1.05rem; color: var(--text); margin-bottom: 0.5rem; }
+  .card-desc { font-family: Arial, sans-serif; font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+  .card-metric { display: inline-block; margin-top: 0.8rem; font-family: Arial, sans-serif; font-size: 0.78rem; font-weight: 500; color: var(--green); background: var(--green-light); padding: 0.25rem 0.6rem; border-radius: 2px; }
+
+  .skills-section { background: var(--bg2); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+  .skill-group-title { font-family: Arial, sans-serif; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green2); margin-bottom: 1rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag { font-family: Arial, sans-serif; font-size: 0.78rem; padding: 0.3rem 0.75rem; background: var(--green-light); color: var(--green); border-radius: 2px; letter-spacing: 0.03em; }
+
+  .leadership-section { background: var(--bg); }
+  .leadership-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .lead-card { background: var(--cream); border: 1px solid var(--border); border-radius: 2px; padding: 1.4rem; }
+  .lead-icon { font-size: 1.4rem; margin-bottom: 0.8rem; }
+  .lead-title { font-size: 1rem; color: var(--text); margin-bottom: 0.4rem; }
+  .lead-desc { font-family: Arial, sans-serif; font-size: 0.84rem; color: var(--muted); line-height: 1.6; }
+
+  .contact-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+  .contact-inner p { color: var(--muted); margin-bottom: 2.5rem; font-size: 1rem; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+  .contact-link { padding: 0.65rem 1.6rem; border: 1px solid var(--border); border-radius: 2px; color: var(--muted); text-decoration: none; font-family: Arial, sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.2s; }
+  .contact-link:hover { border-color: var(--green); color: var(--green); }
+  .contact-email { font-size: 1.2rem; color: var(--green); text-decoration: none; display: block; margin-bottom: 2rem; }
+  .contact-email:hover { text-decoration: underline; }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif; font-size: 0.78rem; color: var(--muted); background: var(--bg); }
+
+  @media(max-width: 700px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-photo { aspect-ratio: 1; max-width: 240px; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">K · P</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#experience">Experience</a>
+    <a href="#portfolio">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div style="position:relative; z-index:1;">
+    <div class="hero-line"></div>
+    <div class="hero-tag">Technical PM · Engineer · MBA Candidate</div>
+    <h1>Kelly <span>Petrino</span></h1>
+    <p class="hero-sub">Technical PM with 3+ years shipping commerce features at Meta and a CS/ML foundation from Princeton — seeking to apply deep product and AI expertise to drive meaningful outcomes at an AI or large-scale tech company.</p>
+    <div class="btn-group">
+      <a href="#experience" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo" style="background:none; border:none; padding:0;"><img src="data:image/jpeg;base64,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      <div class="about-photo">Photo</div>
+      <div class="about-text">
+        <div class="section-tag">About</div>
+        <h2 class="section-title">Engineer turned product leader</h2>
+        <div class="divider"></div>
+        <p>I'm a technical product manager with a track record of shipping high-impact features at scale. At Meta, I drove measurable GMV growth across Instagram and Facebook Shopping — owning everything from product strategy and ML collaboration to A/B testing and cross-functional execution.</p>
+        <p>Currently completing my MBA at Harvard Business School (Class of 2026), with coursework in Data Science & AI for Leaders, Scaling Tech Ventures, and Strategy & Technology. I hold a B.S.E. in Computer Science from Princeton, with a certificate in Statistics and Machine Learning.</p>
+        <p>Outside of work: traveling, Monopoly Deal, the NYT Daily Mini, and rooting for the NY Giants.</p>
+        <div class="stats-row">
+          <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Features shipped</div></div>
+          <div class="stat-item"><div class="stat-num">15%+</div><div class="stat-label">Topline metric lift</div></div>
+          <div class="stat-item"><div class="stat-num">5%</div><div class="stat-label">Video creation lift</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="edu-section">
+  <div class="container">
+    <div class="section-tag">Education</div>
+    <h2 class="section-title">Academic background</h2>
+    <div class="divider"></div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-years">2024 — 2026</div>
+        <div class="edu-school">Harvard Business School</div>
+        <div class="edu-degree">MBA Candidate, May 2026 · Boston, MA</div>
+        <div class="edu-tags">
+          <span class="edu-tag">AI in Business</span>
+          <span class="edu-tag">Scaling Tech Ventures</span>
+          <span class="edu-tag">Data Science & AI</span>
+          <span class="edu-tag">Strategy & Technology</span>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-years">2017 — 2021</div>
+        <div class="edu-school">Princeton University</div>
+        <div class="edu-degree">B.S.E. Computer Science, Cum Laude · Princeton, NJ</div>
+        <div class="edu-tags">
+          <span class="edu-tag">Statistics & ML Certificate</span>
+          <span class="edu-tag">Cum Laude</span>
+          <span class="edu-tag">Full-stack Engineering</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="exp-section">
+  <div class="container">
+    <div class="section-tag">Career</div>
+    <h2 class="section-title">Experience</h2>
+    <div class="divider"></div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-date">Summer 2025</div>
+        <div class="timeline-role">Sr. Product Manager — Technical Intern</div>
+        <div class="timeline-company">Amazon Web Services (AWS) · Boston, MA</div>
+        <ul class="timeline-bullets">
+          <li>Defined and scoped new snapshot capabilities for the AWS FSx Console and API; roadmap adopted for team's H2 planning cycle.</li>
+          <li>Conducted customer discovery sessions to surface pain points; synthesized findings into a prioritized product brief and final feature requirements.</li>
+          <li>Led daily PM scrums and monitored customer KPIs during on-call shifts, driving rapid triage of emerging issues.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">September 2021 — August 2024</div>
+        <div class="timeline-role">Software Engineer (Product-Focused)</div>
+        <div class="timeline-company">Meta Platforms · New York, NY</div>
+        <div class="sub-label">Product Strategy & Impact</div>
+        <ul class="timeline-bullets">
+          <li>Drove 3% GMV growth by partnering with ML teams to personalize the shopping journey — identified the opportunity, wrote the spec, and led cross-functional execution.</li>
+          <li>Grew GMV 2% by redesigning the "Add to Cart" entry point on scrollable product tiles; drove the A/B test hypothesis, analysis, and launch decision.</li>
+          <li>Achieved 15%+ improvement in topline metrics across Shop Builder and Shopping Cart by launching 10+ buyer features end-to-end, including a full shopping cart information architecture redesign.</li>
+        </ul>
+        <div class="sub-label">Technical Leadership & Execution</div>
+        <ul class="timeline-bullets">
+          <li>Analyzed A/B test results using SQL and internal data visualization tools to identify user patterns and define post-launch iteration plans.</li>
+          <li>Owned Basket Building and Cart Abandonment workstreams; led reviews with pillar tech leads and aligned senior stakeholders on prioritization.</li>
+          <li>Maintained shared project tracker and weekly syncs with engineering, design, and data partners to surface blockers and maintain org-wide visibility.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Summer 2020</div>
+        <div class="timeline-role">Software Engineer Intern</div>
+        <div class="timeline-company">Meta Platforms · Menlo Park, CA</div>
+        <ul class="timeline-bullets">
+          <li>Built a new announcement system end-to-end for the Creator Studio Mobile App home page; deployed to 100% of users.</li>
+          <li>Early impact analysis showed a 5% lift in post and live video creation from the app.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Summer 2019</div>
+        <div class="timeline-role">Software Engineer Intern</div>
+        <div class="timeline-company">American Express · New York, NY</div>
+        <ul class="timeline-bullets">
+          <li>Scoped and began implementing a long-term architecture overhaul of batch processes for online card applications, migrating toward real-time processing with Apache Kafka.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="container">
+    <div class="section-tag">Selected Projects</div>
+    <h2 class="section-title">Work & Projects</h2>
+    <div class="divider"></div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="card-img">&#128722;</div>
+        <div class="card-body">
+          <div class="card-tag">Meta · E-commerce</div>
+          <div class="card-title">Shopping Cart Redesign</div>
+          <div class="card-desc">Led full information architecture redesign of the Instagram & Facebook shopping cart, coordinating across ML, design, and engineering from spec to launch.</div>
+          <span class="card-metric">15%+ topline improvement</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="card-img">&#9729;</div>
+        <div class="card-body">
+          <div class="card-tag">AWS · Infrastructure</div>
+          <div class="card-title">FSx Snapshot Capabilities</div>
+          <div class="card-desc">Defined new snapshot features for the AWS FSx Console and API — from customer discovery through product brief to engineering handoff. Roadmap adopted for H2 planning.</div>
+          <span class="card-metric">Adopted for H2 roadmap</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="card-img">&#127984;</div>
+        <div class="card-body">
+          <div class="card-tag">Princeton · ML</div>
+          <div class="card-title">Disney Park Path Optimizer</div>
+          <div class="card-desc">Built an ML model to predict the time-optimal routing path through Disney parks — applying supervised learning to a real-world combinatorial optimization problem.</div>
+          <span class="card-metric">Independent research project</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="card-img">&#128101;</div>
+        <div class="card-body">
+          <div class="card-tag">Princeton · Software</div>
+          <div class="card-title">CS Office Hours Queue</div>
+          <div class="card-desc">Developed a real-time online queuing system to track and connect students during CS office hours, used by 100+ students.</div>
+          <span class="card-metric">100+ active users</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="skills-section">
+  <div class="container">
+    <div class="section-tag">Expertise</div>
+    <h2 class="section-title">Skills</h2>
+    <div class="divider"></div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Product</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Product Strategy</span>
+          <span class="skill-tag">Roadmapping</span>
+          <span class="skill-tag">A/B Testing</span>
+          <span class="skill-tag">User Research</span>
+          <span class="skill-tag">KPI Analysis</span>
+          <span class="skill-tag">Agile / Scrum</span>
+          <span class="skill-tag">Customer Discovery</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Engineering</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">PHP / Hack</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">R</span>
+          <span class="skill-tag">Apache Kafka</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">AI & Data</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Supervised / Unsupervised ML</span>
+          <span class="skill-tag">LLM APIs</span>
+          <span class="skill-tag">Prompt Engineering</span>
+          <span class="skill-tag">RAG</span>
+          <span class="skill-tag">Statistical Inference</span>
+          <span class="skill-tag">Data Visualization</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="leadership-section">
+  <div class="container">
+    <div class="section-tag">Community</div>
+    <h2 class="section-title">Leadership & Giving Back</h2>
+    <div class="divider"></div>
+    <div class="leadership-grid">
+      <div class="lead-card">
+        <div class="lead-icon">&#128101;</div>
+        <div class="lead-title">MetaNY Women in Tech</div>
+        <div class="lead-desc">Mentored 3 new-grad engineers over 2+ years through structured 1:1 coaching; also planned team-building offsites as Cart team social chair.</div>
+      </div>
+      <div class="lead-card">
+        <div class="lead-icon">&#9997;</div>
+        <div class="lead-title">Women in CS — Princeton</div>
+        <div class="lead-desc">Served as Membership Chair, focused on expanding CS access and building community for women in tech at Princeton.</div>
+      </div>
+      <div class="lead-card">
+        <div class="lead-icon">&#127775;</div>
+        <div class="lead-title">Princeton Executive Boards</div>
+        <div class="lead-desc">Cloister Inn Community Service Chair and Cheerleading PR/Recruitment Chair — developing leadership and organizational skills across campus institutions.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="section-tag">Contact</div>
+      <h2 class="section-title">Let's connect</h2>
+      <div class="divider" style="margin: 1rem auto 2rem;"></div>
+      <p>Seeking product management roles at AI and large-scale tech companies. Open to full-time opportunities, advisory conversations, and meaningful collaborations.</p>
+      <a class="contact-email" href="mailto:petrinokelly@gmail.com">petrinokelly@gmail.com</a>
+      <div class="contact-links">
+        <a href="tel:9739089068" class="contact-link">(973) 908-9068</a>
+        <a href="#" class="contact-link">LinkedIn</a>
+        <a href="#" class="contact-link">Resume</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Kelly Petrino</span>
+  <span>Boston, MA · HBS MBA 2026</span>
+</footer>
+
+</body>
+</html>
